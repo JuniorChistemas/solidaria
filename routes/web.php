@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\CategoryController;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -22,3 +24,11 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+    ->get('/category', [CategoryController::class, 'index'])
+    ->name('category');
+
+    Route::get('/category/list', [CategoryController::class, 'listCategory']);
+    Route::get('/category/add', [CategoryController::class, 'addCategory']);
+    Route::get('/category/update', [CategoryController::class, 'updateCategory']);
+    Route::get('/category/delete', [CategoryController::class, 'removeCategory']);
