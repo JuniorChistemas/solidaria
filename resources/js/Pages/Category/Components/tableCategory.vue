@@ -4,7 +4,7 @@
     :lazy="true"
     :paginator="true"
     :rows="pagination.per_page"
-    :total-records="pagination.total"
+    :totalRecords="pagination.total"
     @page="nextPage"
     size="small"
     scrollable
@@ -13,6 +13,7 @@
     show-gridlines
     :loading="loadingTable"
 >
+
         <!-- Paginación Detalle -->
         <template #paginatorstart>
             <span>
@@ -32,6 +33,13 @@
                         v-model="nameCategory"
                         class="w-32 sm:w-auto"
                         @input="handleSearchInput"
+                    />
+                    <Button 
+                        v-if="nameCategory" 
+                        icon="pi pi-times" 
+                        class="p-button-text p-button-sm"
+                        @click="clearSearch"
+                        title="Limpiar búsqueda"
                     />
                 </div>
                 <div>
@@ -101,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from "vue";
+import { ref,watch, defineProps, defineEmits } from "vue";
 import Badge from "primevue/badge";
 import Button from "primevue/button";
 import Column from "primevue/column";
@@ -165,11 +173,15 @@ async function saveCategory() {
     try {
         let response;
         if (editMode.value) {
-            // Actualizar categoría mediante GET
-            response = await axios.get(`/category/update?id=${categoryId.value}&name=${encodeURIComponent(newCategoryName.value)}`);
+            // Hacer una solicitud PUT para actualizar la categoría
+            response = await axios.put(`/category/update/${categoryId.value}`, {
+                name: newCategoryName.value
+            });
         } else {
-            // Guardar nueva categoría
-            response = await axios.get(`/category/add?name=${encodeURIComponent(newCategoryName.value)}`);
+            // Hacer una solicitud POST para agregar una nueva categoría
+            response = await axios.post(`/category/add`, {
+                name: newCategoryName.value
+            });
         }
 
         // Emitir evento para actualizar la lista de categorías
@@ -182,19 +194,21 @@ async function saveCategory() {
         editMode.value = false;
     } catch (error) {
         if (error.response?.data?.error) {
-            errorMessage.value = error.response.data.error;
+            errorMessage.value = error.response.data.errors.name ? error.response.data.errors.name[0] : "Ocurrió un error inesperado";
         } else {
             errorMessage.value = "Ocurrió un error al guardar la categoría";
         }
     }
 }
 
+
+
 // Función para eliminar la categoría
 async function deleteCategory() {
     if (!categoryToDelete.value) return;
 
     try {
-        await axios.get(`/category/delete?id=${categoryToDelete.value.id}`);
+        await axios.delete(`/category/delete/${categoryToDelete.value.id}`);
 
         // Emitir evento para actualizar la lista de categorías
         emit("deleteCategory");
@@ -206,6 +220,7 @@ async function deleteCategory() {
         console.error("Error al eliminar la categoría:", error);
     }
 }
+
 
 // Búsqueda con debounce
 const debounceSearchCategory = debounce((value) => {
@@ -221,4 +236,11 @@ function nextPage(event) {
     console.log("Cambiando a la página:", event.page + 1); // Depuración en consola
     emit("loadingPage", event.page + 1); // PrimeVue usa índice basado en 0, sumamos 1 para Laravel
 }
+
+// Función para limpiar búsqueda
+function clearSearch() {
+    nameCategory.value = "";
+    emit("searchCategory", ""); // Volver a cargar todas las categorías
+}
+
 </script>

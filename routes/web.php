@@ -24,11 +24,14 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
-    ->get('/category', [CategoryController::class, 'index'])
-    ->name('category');
 
-    Route::get('/category/list', [CategoryController::class, 'listCategory']);
-    Route::get('/category/add', [CategoryController::class, 'addCategory']);
-    Route::get('/category/update', [CategoryController::class, 'updateCategory']);
-    Route::get('/category/delete', [CategoryController::class, 'removeCategory']);
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::get('/category', [CategoryController::class, 'index'])->name('category');
+
+    Route::prefix('category')->group(function () {
+        Route::get('/list', [CategoryController::class, 'listCategory']);
+        Route::post('/add', [CategoryController::class, 'store']);
+        Route::put('/update/{category}', [CategoryController::class, 'update']); // Actualizar
+        Route::delete('/delete/{category}', [CategoryController::class, 'destroy']); // Eliminar
+    });
+});

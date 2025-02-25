@@ -6,23 +6,38 @@ import axios from "axios";
 
 const categoriesData = ref([]);
 const loadingTable = ref(true);
-const pagination = ref({});
+const pagination = ref({
+    total: 0,
+    current_page: 1,
+    per_page: 10,
+    last_page: 1,
+    from: 0,
+    to: 0
+});
+
+const nameCategory = ref(""); // Mantener el valor de búsqueda
 
 // Función para manejar cambio de página
 const loadingPage = (page) => {
     console.log("Recibida la nueva página:", page);
-    fetchCategories(page);
+    fetchCategories(page, nameCategory.value); // Pasar el término de búsqueda al cambiar de página
 };
 
-// Función para cargar las categorías con paginación
-const fetchCategories = async (page = pagination.value.current_page || 1, name = "") => {
+// Función para cargar las categorías con paginación y búsqueda
+const fetchCategories = async (page = pagination.value.current_page, name = nameCategory.value) => {
     loadingTable.value = true;
     try {
-        console.log("Solicitando datos de la página:", page);
         const response = await axios.get(`/category/list?page=${page}&name=${name}`);
-        
-        categoriesData.value = response.data.data;
-        pagination.value = response.data.pagination; // Mantener la paginación actualizada
+
+        categoriesData.value = response.data.data || [];
+        pagination.value = response.data.pagination || {
+            total: 0,
+            current_page: page,
+            per_page: 10,
+            last_page: 1,
+            from: 0,
+            to: 0
+        };
 
         console.log("Datos recibidos:", response.data);
     } catch (error) {
@@ -34,7 +49,13 @@ const fetchCategories = async (page = pagination.value.current_page || 1, name =
 
 // Función para búsqueda
 const searchCategory = (name) => {
+    nameCategory.value = name; // Guardar el término de búsqueda
     fetchCategories(1, name); // Siempre buscar desde la primera página
+};
+
+// Función para eliminar una categoría y mantener el filtro de búsqueda
+const deleteCategoryAndReload = () => {
+    fetchCategories(1, nameCategory.value); // Recargar manteniendo el filtro
 };
 
 // Cargar categorías al montar el componente
@@ -50,7 +71,7 @@ onMounted(() => fetchCategories());
         </template>
 
         <div class="p-4">
-            <TableCategorys
+          <TableCategorys
                 :categoriesData="categoriesData"
                 :pagination="pagination"
                 :loadingTable="loadingTable"
@@ -61,6 +82,7 @@ onMounted(() => fetchCategories());
                 @loadingPage="loadingPage" 
 
             />
+
         </div>
     </AppLayout>
 </template>
