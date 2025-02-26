@@ -17,7 +17,7 @@
                     :key="item.label"
                     class="mb-2"
                 >
-                    <!-- Menú con submenús -->
+                    <!-- Menu with submenus -->
                     <template v-if="item.submenu">
                         <div
                             @click="toggleSubmenu(index)"
@@ -84,7 +84,7 @@
                         </ul>
                     </template>
 
-                    <!-- Menú sin submenús -->
+                    <!-- Menu without submenus -->
                     <NavLink
                         v-else
                         :href="route(item.route)"
@@ -120,7 +120,7 @@ import { useAsideStore, useThemeStore } from "@/Stores/DashboardStore";
 const AsideStore = useAsideStore();
 const ThemeStore = useThemeStore();
 
-// Datos estáticos del menú
+// Static menu data
 const menuItems = [
     { label: "Inicio", route: "dashboard", icon: "pi pi-home" },
     {
@@ -141,6 +141,7 @@ const menuItems = [
         icon: "pi pi-heart",
         submenu: [
             { label: "Registro", route: "profile.show", icon: "pi pi-plus" },
+            { label: "Doctores", route: "doctor.index", icon: "pi pi-user" },
             { label: "Consultas", route: "dashboard", icon: "pi pi-calendar" },
             { label: "Pacientes", route: "dashboard", icon: "pi pi-users" },
         ],
@@ -150,7 +151,7 @@ const menuItems = [
     { label: "Reportes", route: "dashboard", icon: "pi pi-chart-bar" },
 ];
 
-// Estado reactivo solo para los submenús
+// Reactive status for submenus only
 const openMenus = ref({});
 
 const toggleSubmenu = (index) => {
