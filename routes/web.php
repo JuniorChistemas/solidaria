@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CategoryController;
 
 
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,7 +28,7 @@ Route::middleware([
 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
-    ->prefix('category') // ✅ Prefijo para evitar redundancia
+    ->prefix('category')
     ->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index'); // ✅ Cambio de nombre
         Route::get('/list', [CategoryController::class, 'listCategory'])->name('category.list');
@@ -36,3 +37,4 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::delete('delete/{category}', [CategoryController::class, 'destroy'])->name('category.destroy'); // ✅ RESTful
     });
 
+   
