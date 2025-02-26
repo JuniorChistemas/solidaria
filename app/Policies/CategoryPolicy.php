@@ -14,7 +14,7 @@ class CategoryPolicy
     {
         // return $user->hasPermissionTo('view categories');
         return $user->can('view categories');
-        // return $user->hasRole('admin');
+        // return $user->hasRole('admin'); 
     }
 
     /**
