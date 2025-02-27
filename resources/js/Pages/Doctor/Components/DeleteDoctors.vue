@@ -51,7 +51,8 @@
             />
             <!-- Confirmation message -->
             <p class="text-red-500 text-sm">
-                ¿Estás seguro de que deseas eliminar este doctor? Esta acción no se puede deshacer.
+                ¿Estás seguro de que deseas eliminar este doctor? Esta acción no
+                se puede deshacer.
             </p>
             <!-- Buttons to cancel or confirm deletion -->
             <div class="flex justify-end gap-4">
@@ -81,7 +82,6 @@ import {
     ToggleButton,
 } from "primevue";
 import { Doctor } from "../Interfaces/Doctor";
-import { defineProps, defineEmits } from "vue";
 
 const { isVisible, doctor } = defineProps<{
     isVisible: boolean;
@@ -106,4 +106,3 @@ const confirmDelete = () => {
     emit("emitConfirmDelete", doctor.id);
 };
 </script>
-

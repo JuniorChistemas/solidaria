@@ -1,9 +1,9 @@
-const colorTag = (state: number): string => {
-    return state === 1 ? "success" : "danger";
+const colorTag = (state: boolean): string => {
+    return state === true ? "success" : "danger";
 };
 
-const textTag = (state: number): string => {
-    return state === 1 ? "Activo" : "Inactivo";
+const textTag = (state: boolean): string => {
+    return state === true ? "Activo" : "Inactivo";
 };
 
 export { colorTag, textTag };

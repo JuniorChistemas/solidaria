@@ -5,3 +5,11 @@
 [x-cloak] {
     display: none;
 }
+
+body {
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    background-color: var(--body-bg);
+    font-size: 0.9rem;
+}
