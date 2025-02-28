@@ -52,6 +52,9 @@ class CategoryController extends Controller
         }
     }
 
+
+    // ! don't use a single request for store and update methods, create a separate request for each method storeRequest and updateRequest
+
     public function store(CategoryRequest $request): JsonResponse
     {
         Gate::authorize('create', Category::class);

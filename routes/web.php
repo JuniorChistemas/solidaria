@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\Autocomplete\SearchDoctorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\LaboratoryController;
+use App\Http\Controllers\ZoneController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SupplierController;
 
 // SYSTEM START
@@ -18,12 +22,20 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::resource('doctor', DoctorController::class)->except(['create']);
         Route::resource('category', CategoryController::class)->except(['create', 'show']);
         Route::resource('laboratories', LaboratoryController::class)->except(['create']);
+        Route::resource('zone', ZoneController::class)->except(['create', 'show']);
         Route::resource('supplier', SupplierController::class)->except(['create']);
         // path/route to list
         Route::get('doctors/list', [DoctorController::class, 'listDoctor'])->name('doctor.list');
         Route::get('laboratories/list', [LaboratoryController::class, 'listLaboratory'])->name('laboratory.list');
-           
-       
+        Route::get('categories/list', [CategoryController::class, 'listCategory'])->name('category.list');
+        Route::get('zone/list', [ZoneController::class, 'listZone'])->name('zone.list');
+
+        // path/route to search
+
+        // * view search
+        Route::get('search', [SearchController::class, 'viewSearch'])->name('search');
+        // * search for doctors by name
+        Route::get('search/doctor', [SearchDoctorController::class, 'searchDoctor'])->name('search.doctor');
     });
 });
 

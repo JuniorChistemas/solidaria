@@ -1,41 +1,40 @@
 <template>
-    <AppLayout title="Categorías">
+    <AppLayout title="Zonas">
             <Toast position="bottom-right" />
 
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Categorías
+                Lista de Zonas
             </h2>
         </template>
-
-
-        <div class="p-4">
-            <TableCategorys
-                :categoriesData="categoriesData"
+    <div class="p-4">
+            <h3 class="text-lg font-bold mb-4">Lista de Zonas</h3>
+            <TableZones
+                :zonesData="zonesData"
                 :pagination="pagination"
                 :loadingTable="loadingTable"
-                @loadingPage="fetchCategories"
-                @searchCategory="searchCategory"
+                @loadingPage="fetchZones"
+                @searchZone="searchZone"
                 @open-create="openCreateModal"
                 @open-edit="openEditModal"
                 @open-delete="openDeleteModal"
             />
 
-            <CreateCategory
+            <CreateZone
                 v-if="showCreateModal"
-    :visible="showCreateModal"
-    :category="selectedCategory"
-    @save="handleCreateCategory"
-    @update="handleUpdateCategory"
-    @refreshList="fetchCategories" 
-    @closeCreateModal="closeCreateModal"
+                :visible="showCreateModal"
+                :zone="selectedZone"
+                @save="handleCreateZone"
+                @update="handleUpdateZone"
+                @refreshList="fetchZones" 
+                @closeCreateModal="closeCreateModal"
             />
 
-            <DeleteCategory
+            <DeleteZone
                 v-if="showDeleteModal"
                 :visible="showDeleteModal"
-                :category="selectedCategory"
-                @delete="handleDeleteCategory"
+                :zone="selectedZone"
+                @delete="handleDeleteZone"
                 @closeDeleteModal="closeDeleteModal"
             />
         </div>
@@ -44,32 +43,32 @@
 
 <script setup lang="ts">
 import AppLayout from "@/Layouts/AppLayout.vue";
-import TableCategorys from "./Components/tableCategory.vue";
-import CreateCategory from "./Components/createCategory.vue";
-import DeleteCategory from "./Components/deleteCategory.vue";
-import useCategories from "@/Composables/useCategories";
+import TableZones from "./Components/tableZone.vue";
+import CreateZone from "./Components/createZone.vue";
+import DeleteZone from "./Components/deleteZone.vue";
+import useZones from "@/Composables/useZones";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 const toast = useToast();
 
 const {
-    categoriesData,
+    zonesData,
     loadingTable,
     pagination,
     showCreateModal,
     showDeleteModal,
-    selectedCategory,
-    fetchCategories,
-    searchCategory,
+    selectedZone,
+    fetchZones,
+    searchZone,
     openCreateModal,
     openEditModal,
     openDeleteModal,
     closeCreateModal,
     closeDeleteModal,
-    handleCreateCategory,
-    handleUpdateCategory,
-    handleDeleteCategory
-} = useCategories(useToast()); 
+    handleCreateZone,
+    handleUpdateZone,
+    handleDeleteZone
+} = useZones(useToast()); 
 
 
 </script>

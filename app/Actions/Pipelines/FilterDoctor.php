@@ -14,7 +14,7 @@ class FilterDoctor
 {
 
   // function for filter by name and date
-public function execute(?array $filters, $request)
+  public function execute(?array $filters, $request, int $perPage = 5)
 
   {
     return app(Pipeline::class)
@@ -24,7 +24,7 @@ public function execute(?array $filters, $request)
         new FilterByState($request->get('state')),
         new FilterByDate($request->get('date_start'), $request->get('date_end')),
 
- ])
-      ->thenReturn()->paginate(5);
+      ])
+      ->thenReturn()->paginate($perPage);
   }
 }

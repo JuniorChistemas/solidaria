@@ -11,7 +11,7 @@ class StoreLaboratoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
 
     /**
@@ -21,9 +21,9 @@ class StoreLaboratoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        // !validated state 
         return [
             'name' => 'required|string|max:100',
         ];
     }
-
 }

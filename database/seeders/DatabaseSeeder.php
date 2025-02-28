@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             DoctorSeeder::class,
             LaboratorySeeder::class,
             SupplierSeeder::class,
+            ZoneSeeder::class,
         ]);
     }
 }

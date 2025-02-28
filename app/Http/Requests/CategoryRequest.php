@@ -8,7 +8,7 @@ class CategoryRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
 
     public function rules()
@@ -17,9 +17,9 @@ class CategoryRequest extends FormRequest
             'name' => 'required|string|max:255|unique:categories,name,'. ($this->id ?? 'NULL'),
         ];
     }
-    
 
 
+    //  ! not used
     public function messages(): array
     {
         return [

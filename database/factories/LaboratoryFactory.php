@@ -16,6 +16,7 @@ class LaboratoryFactory extends Factory
      */
     public function definition(): array
     {
+        // ! add a new state
         return [
             'name' => $this->faker->company(), // Genera un nombre de empresa aleatorio
         ];

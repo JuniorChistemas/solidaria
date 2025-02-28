@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Pipelines\Filter;
+use App\Actions\Pipelines\FilterDoctor;
 use App\Models\Doctor;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Resources\DoctorResource;
+use App\Pipelines\FilterByName;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -19,27 +21,17 @@ class DoctorController extends Controller
     private const DATA = 'data';
     private const PAGINATION = 'pagination';
     // function to return the view of the doctor module
-    public function listDoctor(): JsonResponse
+    public function listDoctor(Request $request): JsonResponse
     {
         // authorization so you can access the method
 
         Gate::authorize('viewAny', Doctor::class);
-    
-        try {
-            $name = request('name');
-    
-            $doctors = Doctor::when($name, function ($query, $name) {
 
-                    return $query->where(function ($subQuery) use ($name) {
-                        $subQuery->where('name', 'like', "$name%") // Prioritize names that start with the search
-                                 ->orWhere('name', 'like', "%$name%"); // Then the ones that contain the search
-                    })
-                    ->orderByRaw('state DESC'); // Only applies if there is a search
-                })
-                ->orderByRaw("name LIKE ? DESC", ["$name%"]) // Prioritize names that start with search
-                ->orderBy('id', 'asc') // Then sort by ascending ID
-                ->paginate(20);
-    
+        try {
+            $filter = [
+                new FilterByName($request->get('name')),
+            ];
+            $doctors = app(FilterDoctor::class)->execute($filter, $request, 20);
             return response()->json([
                 self::DATA => DoctorResource::collection($doctors),
                 self::PAGINATION => [
@@ -58,7 +50,7 @@ class DoctorController extends Controller
             ], 500);
         }
     }
-    
+
     // index function to load the data and the filter for the doctor module table
 
     public function index()
@@ -126,7 +118,7 @@ class DoctorController extends Controller
 
     public function searchDoctor(Request $request)
     {
-        $doctors = (new Filter())->execute(null, $request);
+        $doctors = (new Filter())->execute([], $request);
         return response()->json([
             self::DATA => DoctorResource::collection($doctors),
             self::PAGINATION => [

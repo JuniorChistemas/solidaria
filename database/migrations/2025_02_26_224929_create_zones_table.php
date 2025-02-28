@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // ! created column state in the table
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('zones');
     }
 };

@@ -33,5 +33,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'view laboratories']);
         Permission::create(['name' => 'edit laboratories']);
         Permission::create(['name' => 'delete laboratories']);
+        // Permissions for Zone module
+        Permission::create(['name' => 'create zones']);
+        Permission::create(['name' => 'view zones']);
+        Permission::create(['name' => 'edit zones']);
+        Permission::create(['name' => 'delete zones']);
     }
 }
