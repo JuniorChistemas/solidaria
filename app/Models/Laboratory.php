@@ -26,6 +26,7 @@ class Laboratory extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'state' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
