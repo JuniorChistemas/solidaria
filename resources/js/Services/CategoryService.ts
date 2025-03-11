@@ -13,8 +13,9 @@ export const createCategory = async (categoryData: Omit<Category, "id" | "create
     return response.data;
 };
 
-export const updateCategory = async (categoryId: number, categoryData: Omit<Category, "id" | "created_at" | "updated_at">): Promise<Category> => {
-    const response = await axios.put<Category>(`${API_URL_MODULO}/${categoryId}`, categoryData);
+export const updateCategory = async (categoryId: number, categoryData: { name: string; state: string }) => {
+    console.log("Enviando datos:", categoryData); // Verifica en la consola del navegador
+    const response = await axios.put(`${API_URL_MODULO}/${categoryId}`, categoryData);
     return response.data;
 };
 

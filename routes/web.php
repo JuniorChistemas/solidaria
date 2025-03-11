@@ -60,4 +60,3 @@ Route::put('laboratory/update/{laboratory}', [LaboratoryController::class, 'upda
 Route::delete('laboratory/delete/{laboratory}', [LaboratoryController::class, 'destroy'])->name('laboratory.destroy');
 
 Route::get('zones/search', [ZoneController::class, 'searchZone'])->name('zone.search');
-Route::get('categories/search', [ZoneController::class, 'searchCategory'])->name('category.search');
