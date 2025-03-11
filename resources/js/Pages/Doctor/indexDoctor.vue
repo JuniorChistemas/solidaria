@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import AppLayout from "@/Layouts/AppLayout.vue";
 import TableDoctors from "./Components/TableDoctors.vue";
-import { useDoctors } from "@/Composable/useDoctors";
+import { useDoctors } from "@/Composables/useDoctors";
 import CreateDoctors from "./Components/CreateDoctors.vue";
 import DeleteDoctors from "./Components/DeleteDoctors.vue";
 

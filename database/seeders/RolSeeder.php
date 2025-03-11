@@ -13,8 +13,8 @@ class RolSeeder extends Seeder
      */
     public function run(): void
     {
-        $role_administrador =   Role::create(['name' => 'administrador']);
-        $role_vendedor =  Role::create(['name' => 'vendedor']);
-        $role_almacen = Role::create(['name' => 'almacen']);
+        $role_administrador =   Role::create(['name' => 'administrador', 'state' => true]);
+        $role_vendedor =  Role::create(['name' => 'vendedor', 'state' => true]);
+        $role_almacen = Role::create(['name' => 'almacen', 'state' => false]);
     }
 }

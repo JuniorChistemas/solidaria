@@ -24,6 +24,7 @@ class StoreLaboratoryRequest extends FormRequest
         // !validated state 
         return [
             'name' => 'required|string|max:100',
+            'state' => 'required|boolean'
         ];
     }
 }

@@ -11,11 +11,15 @@
             <div class="flex flex-col mt-4">
                 <AutocompleteDoctor @update:model-value="doctorSelected" />
             </div>
+            <div class="flex flex-col mt-4">
+                <PermissionsSelect />
+            </div>
         </div>
     </AppLayout>
 </template>
 <script setup lang="ts">
 import AutocompleteDoctor from "@/Components/Autocomplete/AutocompleteDoctor.vue";
+import PermissionsSelect from "@/Components/Selects/PermissionsSelect.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 const doctorSelected = (id: number) => {

@@ -17,12 +17,11 @@ class SupplierResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'supplier_name' => $this->supplier_name,
+            'name' => $this->name,
             'ruc' => $this->ruc,
             'phone' => $this->phone,
             'address' => $this->address,
-            'created_at' => Carbon::parse($this->start_date)->format('Y-m-d'),
-            'updated_at' => Carbon::parse($this->start_date)->format('Y-m-d'),
+            'state' => $this->state,
         ];
     }
 }

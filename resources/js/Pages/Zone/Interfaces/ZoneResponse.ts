@@ -1,6 +1,7 @@
 import { Zone } from "./Zone";
 
-export { Zone }; 
+export { Zone };
+// pagination interface already exists in the general interfaces
 export interface Pagination {
     total: number;
     current_page: number;
@@ -10,7 +11,8 @@ export interface Pagination {
     to: number;
 }
 
+// you use this interface?
 export interface ZoneResponse {
-    data: Zone[]; 
+    data: Zone[];
     pagination: Pagination;
 }

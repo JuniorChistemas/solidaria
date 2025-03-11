@@ -21,7 +21,13 @@ class LaboratoryController extends Controller
     private const DATA = 'data';
     private const PAGINATION = 'pagination';
 
-
+    // funcion index para cargar los datos y el filtro para la tabla del modulo laboratorio
+    public function index()
+    {
+        Gate::authorize('viewAny', Laboratory::class);
+        return Inertia::render('Laboratory/indexLaboratory');
+    }
+    
     public function listLaboratory(): JsonResponse
     {
         // autorizacion para que pueda acceder al metodo
@@ -30,7 +36,9 @@ class LaboratoryController extends Controller
             $name = request('name');
             $laboratories = Laboratory::when($name, function ($query, $name) {
                 return $query->where('name', 'like', "%$name%");
-            })->paginate(20);
+            })
+            ->orderBy('created_at', 'asc')
+            ->paginate(10);
             return response()->json([
                 self::DATA => LaboratoryResource::collection($laboratories),
                 self::PAGINATION => [
@@ -48,14 +56,6 @@ class LaboratoryController extends Controller
                 'error' => $th->getMessage(),
             ], 500);
         }
-    }
-
-
-     // funcion index para cargar los datos y el filtro para la tabla del modulo laboratorio
-    public function index()
-    {
-        Gate::authorize('viewAny', Laboratory::class);
-        return Inertia::render('Laboratory/indexLaboratory');
     }
 
     /**

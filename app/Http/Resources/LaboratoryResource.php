@@ -18,7 +18,9 @@ class LaboratoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'state' => $this->state
+            'state' => $this->state,
+            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d H:i:s'),
         ];
     }
 }

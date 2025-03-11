@@ -8,7 +8,6 @@ import { DoctorDTO } from "@/Pages/Doctor/Interfaces/DoctorDTO";
 import { DoctorResponse } from "@/Pages/Doctor/Interfaces/DoctorResponse";
 import { DoctorServices } from "@/Services/DoctorServices";
 import { useToastUtil } from "@/Utils/Message";
-import axios from "axios";
 import { onMounted, reactive } from "vue";
 
 export const useDoctors = () => {
@@ -116,11 +115,10 @@ export const useDoctors = () => {
         await getDoctor(father.idDoctor);
         father.statusModal.register = true;
     };
-    const emitIdDoctorDelete = async (id: number) => { 
+    const emitIdDoctorDelete = async (id: number) => {
         father.statusModal.delete = true;
         father.idDoctor = id;
-        await getDoctor(father.idDoctor); 
-
+        await getDoctor(father.idDoctor);
     };
     const closeModalAll = (type: "register" | "delete") => {
         father.statusModal[type] = false;
