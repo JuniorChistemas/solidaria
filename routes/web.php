@@ -30,7 +30,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         // path/route to list
         Route::get('doctors/list', [DoctorController::class, 'listDoctor'])->name('doctor.list');
         Route::get('laboratories/list', [LaboratoryController::class, 'listLaboratory'])->name('laboratory.list');
-        Route::get('categories/list', [CategoryController::class, 'listCategory'])->name('category.list');
+        Route::get('category/list', [CategoryController::class, 'listCategory'])->name('category.list');
         Route::get('zone/list', [ZoneController::class, 'listZone'])->name('zone.list');
         Route::get('roles/list', [RoleController::class, 'listRole'])->name('role.list');
         Route::get('suppliers/list', [SupplierController::class, 'listSupplier'])->name('supplier.list');
@@ -61,7 +61,3 @@ Route::delete('laboratory/delete/{laboratory}', [LaboratoryController::class, 'd
 
 Route::get('zones/search', [ZoneController::class, 'searchZone'])->name('zone.search');
 Route::get('categories/search', [ZoneController::class, 'searchCategory'])->name('category.search');
-Route::get('category/list', [CategoryController::class, 'listCategory'])->name('category.list');
-Route::post('category/add/', [CategoryController::class, 'store'])->name('category.store'); 
-Route::put('category/update/{category}', [CategoryController::class, 'update'])->name('category.update'); 
-Route::delete('category/delete/{category}', [CategoryController::class, 'destroy'])->name('category.destroy'); 
