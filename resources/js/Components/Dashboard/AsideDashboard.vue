@@ -153,7 +153,7 @@ const menuItems = [
     { label: "Zonas", route: "zone.index", icon: "pi pi-map" },
     {
         label: "Laboratorios",
-        route: "laboratories.index",
+        route: "zone.index",
         icon: "pi pi-warehouse",
     },
     { label: "Busquedas", route: "search", icon: "pi pi-search" },
